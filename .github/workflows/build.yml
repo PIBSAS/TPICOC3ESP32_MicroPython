@@ -8,7 +8,7 @@ on:
     tags:
      - 'v*'
   schedule:
-     - cron: '0 0 */14 * *'
+     - cron: '0 0 1 * *'
   
   workflow_dispatch:
 
@@ -21,7 +21,7 @@ jobs:
       run: git clone --recurse-submodules https://github.com/micropython/micropython.git
 
     - name: Cache MicroPython builds
-      uses: actions/cache@v4.3.0
+      uses: actions/cache@v5.0.1
       with:
         path: |
           micropython/mpy-cross/mpy-cross
@@ -163,7 +163,7 @@ jobs:
         fi
 
     - name: GH Release
-      uses: softprops/action-gh-release@v2.3.3
+      uses: softprops/action-gh-release@v2.5.0
       with:
         tag_name: ${{ env.TAG_NAME }}
         name: "MicroPython + ST7789 Display Driver for LilyGo T-PicoC3 Display Side RP2040 Release version ${{ env.MPY_VERSION }} (Build ${{ env.TAG_NAME }})"
