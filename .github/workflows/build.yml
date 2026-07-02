@@ -18,20 +18,10 @@ jobs:
 
     steps:
     - name: Clone Micropython
-      run: git clone --recurse-submodules https://github.com/micropython/micropython.git
-
-    - name: Cache MicroPython builds
-      uses: actions/cache@v5.0.1
-      with:
-        path: |
-          micropython/mpy-cross/mpy-cross
-          micropython/ports/rp2/build-*
-        key: micropython-${{ hashFiles('micropython/py/mpconfig.h', 'micropython/ports/rp2/**') }}
-        restore-keys: |
-          micropython-
+      run: git clone --depth 1 --recursive https://github.com/micropython/micropython.git
 
     - name: Setup Python
-      uses: actions/setup-python@v6.0.0
+      uses: actions/setup-python@v6
       with:
         python-version: "3.x"
         cache: "pip"
@@ -163,7 +153,7 @@ jobs:
         fi
 
     - name: GH Release
-      uses: softprops/action-gh-release@v2.5.0
+      uses: softprops/action-gh-release@v3
       with:
         tag_name: ${{ env.TAG_NAME }}
         name: "MicroPython + ST7789 Display Driver for LilyGo T-PicoC3 Display Side RP2040 Release version ${{ env.MPY_VERSION }} (Build ${{ env.TAG_NAME }})"
